@@ -1,7 +1,15 @@
 /.quarto/
+#Purpose of a .gitignore file is to tell Github to ignore or exclude certail files and directories
+#from being committed to the repository
+
+#this is where we ignore temporary files and sessions
 .Rproj.user
 .Rhistory
 .Rdata
+
+#This token file contains access token for authorization, best to keep it off of Git
 .httr-oauth
+
+
 .DS_Store
 .quarto
