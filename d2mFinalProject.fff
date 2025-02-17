@@ -1,0 +1,12 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{Count tileplot highlighting the correlation between Moral
+Conviction and Familiarity of Topic}
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{d2mFinalProject_files/figure-pdf/Correlation-plot-1.pdf}}
+
+}
+
+\end{figure*}
