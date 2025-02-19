@@ -2,6 +2,19 @@
 \ifnextchar[{\eatarg}{}
 [H]
 
+\caption{Effect of Familiarity of an Issue on its Moral Convicvtion}
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{d2mFinalProject_files/figure-pdf/Corr-LMER-plot-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
 \caption{Count tileplot highlighting the correlation between Moral
 Conviction and Familiarity of Topic}
 
