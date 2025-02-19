@@ -110,6 +110,27 @@ pearsontest<-cor.test(newset$Moral_left_scaled,newset$Familiar1_scaled, method =
 corr_estimate<- pearsontest$estimate
 corr_pvalue<- pearsontest$p.value
 ```
+
+```{r Corr-LMER-plot,fig.cap="Effect of Familiarity of an Issue on its Moral Convicvtion"}
+p_corr <- plot_model(
+  CorrelationLMERTest,
+  type = "pred",
+  terms = c("Familiar1_scaled") ,
+  ci.lvl = 0.95
+) +
+  theme_classic() +
+  labs(
+    x = "Familiarity of Sociopolitical Issue (standardized) ",
+    y = "Moral Conviction Score",
+    title = ""
+  )
+
+
+# Show the plot
+p_corr
+
+```
+
 In running a linear mixed-effects regression model, the familiarity of the sociopolitical issue was the strongest positive predictor of moral convictions ($\beta=$ `r round(summary(CorrelationLMERTest)$coefficients[3,1],3)`, p`r if(Familiar_pvalue<0.001) "< 0.001" else paste0("=",Familiar_pvalue)`). On the other hand , the support variable was `r if(Support_pvalue<0.05) "significant" else "not significant"` in predicting moral convictions ($\beta=$`r round(Support_coefficient,3)`, p = `r round(Support_pvalue,3)`).This suggest that the repeated exposure to an issue shapes the intensity of the moral beliefs more so than the political support for this issue. Moral convictions and familiarity were also `r if(corr_estimate>0 & corr_pvalue<0.05) "positively correlated" else if (corr_estimate<0 & corr_pvalue<0.05) "negatively correlated" else "not correlated"` (`r round(corr_estimate,3)`, p `r if(corr_pvalue<0.001) "<0.001" else "=round(corr_pvalue,3)"`). Other demographic factors , including religiosity, did not significantly predict moral conviction scores. 
 
 ```{r Correlation-plot, echo= FALSE,fig.cap="Count tileplot highlighting the correlation between Moral Conviction and Familiarity of Topic"}
