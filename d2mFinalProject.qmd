@@ -11,6 +11,7 @@ date: "2025-10-02"
 format:
   apaquarto-pdf:
     fig-pos: "H"
+    tbl-pos: "H"
     figsintext: true
     floatsintext: true
     keep-tex: true
@@ -23,6 +24,8 @@ suppress-author-note: true
 
 
 ```{r Loading-packages-and-initializing,echo=FALSE,message=FALSE,warning=FALSE}
+#| label: Loading-packages Chunk 
+#In this chunk , I will require and load all the required packages to render and run the code in this qmd file. 
 library(tidyverse)
 library(readr)
 library(tidyr)
@@ -40,9 +43,10 @@ library(performance)
 #the full dataset will be saved separately, since I don't need most of the columns and the variables 
 newset<-read_csv("Main_Beh_TFD.csv",show_col_types = FALSE)
 
-newset<-newset%>% #introducing the new new variable MoralDiff_consistent
+newset<-newset%>%  #introducing two new variables called MoralDiff_consistent amd FamiliarDiff_Consistent, which will be outlined in the manuscript. 
   mutate(MoralDiff_Consistent= case_when((consistent==1&LeftChoice==1)|(consistent==0&LeftChoice==0)~ Moral_left - Moral_right,
-                                         (consistent==0&LeftChoice==1)|(consistent==1&LeftChoice==0)~ Moral_right-Moral_left),FamiliarDiff_Consistent= case_when((consistent==1&LeftChoice==1)|(consistent==0&LeftChoice==0)~ Familiar1 - Familiar2,
+                                         (consistent==0&LeftChoice==1)|(consistent==1&LeftChoice==0)~ Moral_right-Moral_left),
+         FamiliarDiff_Consistent= case_when((consistent==1&LeftChoice==1)|(consistent==0&LeftChoice==0)~ Familiar1 - Familiar2,
                                          (consistent==0&LeftChoice==1)|(consistent==1&LeftChoice==0)~ Familiar2-Familiar1),
          chosenFamiliar= case_when(LeftChoice==1~Familiar1,
             LeftChoice==0~Familiar1),
@@ -53,6 +57,42 @@ newset<-newset%>% #introducing the new new variable MoralDiff_consistent
 
 ```
 
+```{r Aziz-defined-Functions}
+#| label: Aziz-defined-Functions
+
+#this chunk will store some of the function I will use to streamline my inline coding and data presentation 
+
+
+statpresent <- function(variable, stattest) {
+  # Convert unquoted variable name to a string
+  variable <- deparse(substitute(variable))  # Capture unquoted input
+  coeff_mat <- summary(stattest)$coefficients
+  #DEBUGGING, WILL BE COMMENTED OUT AT THE END: Print available variable names for debugging
+  #cat("Available variable names:\n")
+  #print(rownames(coeff_mat))
+  
+    # Check if the variable exists in the coefficient matrix
+  if (!(variable %in% rownames(coeff_mat))) {
+    stop(paste("Error: Variable", variable, "not found in the model summary!"))
+  }
+  
+  # Extracting the correct values
+  variable_coeff <- round(coeff_mat[variable, 1], 3)  # Beta coefficient
+  variable_pvalue <- round(coeff_mat[variable, 5], 3)  # P-value
+  
+  beta <- "β"  # instead of using latex everytime
+  
+  # Formatting the output
+  if (variable_pvalue < 0.001) {
+    return(paste0("(", beta, "=", variable_coeff, ", p<0.001)"))
+  } else {
+    return(paste0("(", beta, "=", variable_coeff, ", p=", variable_pvalue, ")"))
+  }
+}
+
+
+
+```
 # Introduction
 
 The open casket of Emmett Till’s brutalized body shocked the conscience of a nation. Published in 1955 on the covers of Jet magazine and The Chicago Defender, the repeated exposure to this haunting image triggered a collective moral awakening, fueling the growing civil rights movement. However, familiarity does not always align with social justice. A striking example is the 1964 campaign ad Daisy, which featured a young girl counting down as a nuclear explosion loomed ominously (Johnson, 1964). Through repeated exposure, the ad framed voting against the opposing candidate as a moral imperative, leveraging fear and emotion as a political tool rather than an appeal to reason or justice. These two contrasting examples illustrate the power of repeated exposure in shaping moral conviction, regardless of justice and consensus. Therefore, this study explores how familiarity, a consequence of repeated exposure, could form a mechanism of moral conviction.
@@ -80,59 +120,59 @@ Eye fixation duration is a reliable measure of attention allocation in adults (P
 To test the first hypothesis, I will utilize an experiment that examines attention allocation in the context of decision-making. The experiment is designed to measure neural activity in the brain regions during moral decision-making, with eye-tracking utilized as a method to confirm participants’ attention. The experiment includes a pretest survey on 42 various socio-political issues, where familiarity and moral convictions are measured for each participant. Familiarity is measured on a 4-point scale (not familiar to very familiar). Moral conviction is measured by calculating the average of two questions using a 5-point scale: “To what extent is your position on \_\_\_\_ a reflection of your core moral beliefs and convictions?” and “To what extent is your position on \_\_\_ connected to your beliefs about fundamental right and wrong?” (Skitka & Morgan, 2014). Additionally, support is also measured on a 7-point scale (from -3 to +3) to differentiate between moral convictions and political support. The experiment consists of a decision-making task where in each trial participants view two photographs showing protestors for or against the socio-political movements measured in the pretest survey. The sample contains 34 participants and 3,621 trials (an average of 107 trials per participant) after data cleaning. The sample size of 34 participants balances feasibility and statistical power, given the repeated-measures design, where each participant contributes data across 107 trials, effectively increasing the study’s statistical sensitivity. The decision-making task also features thumbs-up or thumbs-down icons next to the photos to indicate whether the protestors are supporting or opposing the issue. These icons will show range of overall support levels across trials and minimize potential collinearity between support and moral conviction ratings. In each decision-making task (which consists of 107 trials for each participant), all issues rated as familiar are featured at least once. The total number of familiar issues ranges from 24 to 40. As the two photographs appear on the screen, participants have 4 seconds to respond before the program automatically proceeds to the next trial. All stimuli are presented in E-prime 2.0 (Psychology Software Tools, Pittsburgh, PA, USA). Participants’ eyes are tracked during the experiment using an EyeLink 1000 Plus Eye Tracker (SR Research, Ontario, Canada). The eye-tracking device is utilized to confirm participants’ attention and record the eye-tracking measures: fixations and saccades. Fixations are instances where the eye sustains its gaze on a specific item or location (Laan et al., 2015), while a saccade is a rapid eye movement that shifts the gaze between two fixation points (Ross et al., 2001). The total fixation duration is calculated as the sum of the duration of all fixations within the window, indicating the stimuli’s onset until the participant’s response is recorded. Pearson’s correlation coefficient will be calculated between familiarity ratings and moral conviction scores to test the first hypothesis. Additionally, a binomial test will be used to test how often the issue with the highest moral conviction score is also the issue with the highest familiarity rating. To test the second hypothesis, a mixed-effects regression model will be used to inspect how familiarity and moral conviction predict total fixation duration. The mixed-effects model is used because fixation duration is an idiosyncratic measure that can differ from person to person (Holmqvist et al., 2011).
 
 ```{r scaling-IVs,include=FALSE}
+#| label: Scaling-IVs
+
+#to ensure all the independent variables are appropriately scaled and ready for the linear regression model, I am using a mutate function from dplyr to process all of them thoroughly for the analysis. 
 newset <- newset %>%
   mutate(across(
     c(maxMoral, Moral_left, Moral_right, Support_left, Support_right,
       Familiar1, Familiar2,supportChosenReAdj, 
       supportUnchosenReAdj, supportDiffReAdj, , consistent,      MoralDiff_Consistent,FamiliarDiff_Consistent,edu,gender,partyAlignment,politicalEngagement,chosenMoral,chosenFamiliar,DUREL_sum),
     ~ scale(.), 
-    .names = "{.col}_scaled"
+    .names = "{.col}_scaled" #To keep them separate from their unscaled counterparts, I am added a "_scaled" to their names and saving them as separate columns. 
   ))
 
-newset
 ```
 
 # Results
 
 ## Topic Familiarity As a Predictor of Moral Convictions
 ```{r Correlation-test,echo=FALSE}
-CorrelationLMERTest<-lmer(Moral_left~Support_left_scaled +
-                                  Familiar1_scaled +
-                                  gender_scaled + 
-                                  edu_scaled +
-                                  partyAlignment_scaled+
-                                  politicalEngagement_scaled+
-                                  DUREL_sum_scaled +
+#| label: Correlation-test
+
+#in this chunk , I will conduct a linear mixed effects regression with the moral conviction score as the dependent variable, and other topic-related variables as independent variables. 
+CorrelationLMERTest<-lmer(Moral_left~Support_left_scaled + #support of the item
+                                  Familiar1_scaled + #familiarity of the item
+                                  gender_scaled + # gender
+                                  edu_scaled + # education
+                                  partyAlignment_scaled+ #party alignment
+                                  politicalEngagement_scaled+ #political engagement
+                                  DUREL_sum_scaled + #Duke Religiousity Score 
                                   (1|Subject),data=newset)
 
-CorrelationLMTest<-lm(Moral_left~Support_left_scaled +
-                                  Familiar1_scaled +
-                                  gender_scaled + 
-                                  edu_scaled +
-                                  partyAlignment_scaled+
-                                  politicalEngagement_scaled+
-                                  DUREL_sum_scaled,data=newset)
+# to make the inline r code easier for me , I will generate the following variables to store numbers of interest to them. 
+Familiar_coefficient=summary(CorrelationLMERTest)$coefficients[3,1] #the beta coefficient of the familiarity variable
+Familiar_pvalue=summary(CorrelationLMERTest)$coefficients[3,5] # the p-value coefficient of the familiarity variable
+Support_coefficient=summary(CorrelationLMERTest)$coefficients[2,1] # the beta coefficient of the political support variable
+Support_pvalue=summary(CorrelationLMERTest)$coefficients[2,5] # the p-value coefficient of the political support variable 
 
-Familiar_coefficient=summary(CorrelationLMERTest)$coefficients[3,1]
-Familiar_pvalue=summary(CorrelationLMERTest)$coefficients[3,5]
-Support_coefficient=summary(CorrelationLMERTest)$coefficients[2,1]
-Support_pvalue=summary(CorrelationLMERTest)$coefficients[2,5]
-
+#As stated in the methods, I will also conduct a pearson correlation test between Familiarity and Moral Conviction
 pearsontest<-cor.test(newset$Moral_left_scaled,newset$Familiar1_scaled, method ="pearson")
 
-corr_estimate<- pearsontest$estimate
-corr_pvalue<- pearsontest$p.value
+# doing the same thing here, for the sake of faster inline r coding
+corr_estimate<- pearsontest$estimate #the correlation estimate
+corr_pvalue<- pearsontest$p.value #the correlation pvalue
 ```
 
 
 
-In running a linear mixed-effects regression model, the familiarity of the sociopolitical issue was the strongest positive predictor of moral convictions ($\beta=$ `r round(summary(CorrelationLMERTest)$coefficients[3,1],3)`, p`r if(Familiar_pvalue<0.001) "< 0.001" else paste0("=",Familiar_pvalue)`) as shown in @fig-effectplot. On the other hand , the support variable was `r if(Support_pvalue<0.05) "significant" else "not significant"` in predicting moral convictions ($\beta=$`r round(Support_coefficient,3)`, p = `r round(Support_pvalue,3)`).This suggest that the repeated exposure to an issue shapes the intensity of the moral beliefs more so than the political support for this issue. Moral convictions and familiarity were also `r if(corr_estimate>0 & corr_pvalue<0.05) "positively correlated" else if (corr_estimate<0 & corr_pvalue<0.05) "negatively correlated" else "not correlated"` (`r round(corr_estimate,3)`, p `r if(corr_pvalue<0.001) "<0.001" else "=round(corr_pvalue,3)"`), where most of the highly familiar sociopolitical issues were highly moralized , as @fig-tileplot illustrates. Other demographic factors , including religiosity, did not significantly predict moral conviction scores.
+In running a linear mixed-effects regression model, the familiarity of the sociopolitical issue was the strongest positive predictor of moral convictions (`r statpresent(Familiar1_scaled,CorrelationLMERTest)`) as shown in @fig-effectplot. On the other hand , the support variable was `r if(Support_pvalue<0.05) "significant" else "not significant"` in predicting moral convictions`r statpresent(Support_left_scaled,CorrelationLMERTest)`.This suggest that the repeated exposure to an issue shapes the intensity of the moral beliefs more so than the political support for this issue. Moral convictions and familiarity were also `r if(corr_estimate>0 & corr_pvalue<0.05) "positively correlated" else if (corr_estimate<0 & corr_pvalue<0.05) "negatively correlated" else "not correlated"` (`r round(corr_estimate,3)`, p `r if(corr_pvalue<0.001) "<0.001" else "=round(corr_pvalue,3)"`), where most of the highly familiar sociopolitical issues were highly moralized , as @fig-tileplot illustrates. Other demographic factors , including religiosity, did not significantly predict moral conviction scores.
 ```{r Corr-LMER-plot,echo=FALSE}
 #| label: fig-effectplot
 #| fig-show: hold
 #| fig-cap: The effect of topic familiarity on moral conviction score
 #| fig-height: 3
-#| fig-width: 4
+#| fig-width: 5
 #| fig-pos: h
 p_corr <- plot_model(
   CorrelationLMERTest,
@@ -191,6 +231,10 @@ RTLMERTest<-lmer(RT~supportDiffReAdj_scaled +
 
 Familiar_coefficient=summary(RTLMERTest)$coefficients[3,1]
 Familiar_pvalue=summary(RTLMERTest)$coefficients[3,5]
+Familiarleft_coefficient=summary(RTLMERTest)$coefficients[6,1]
+Familiarleft_pvalue=summary(RTLMERTest)$coefficients[6,5]
+Familiarright_coefficient=summary(RTLMERTest)$coefficients[7,1]
+Familiarright_pvalue=summary(RTLMERTest)$coefficients[7,5]
 Support_coefficient=summary(RTLMERTest)$coefficients[2,1]
 Support_pvalue=summary(RTLMERTest)$coefficients[2,5]
 Moral_coefficient=summary(RTLMERTest)$coefficients[4,1]
@@ -212,9 +256,9 @@ print(r2)
 In analyzing the response time and eye-tracking variables, the independent variables of interest were operationalized through involving the two topics presented to the participant. Moral conviction was measured as the the difference between the moral conviction scores of consistent and inconsistent items, where the moral socre of the inconsistent item was subtracted from that of the consistent item.
 $$
 \begin{array}{c}
-\text{Moral Conviction Difference} = \\
-\text{Consistent Item's Moral Conviction Score} -
-\text{Inconsitent Item's Moral Conviction Score}
+\mathbf{Moral\ Conviction\ Difference} = \\
+\mathbf{Consistent\ Item\ Moral\ Conviction\ Score} -
+\mathbf{Inconsitent\ Item\ Moral\ Conviction\ Score}
 \end{array}
 $$ 
 \vspace{1pt}
@@ -226,12 +270,12 @@ Familiarity was measured similarly, where the familiarity score for the inconsis
 ```{r Response-Time-Table,echo=FALSE}
 #| label: tbl-RTTable
 #| tbl-cap: The linear regression model results for response time.
-#| tbl-pos: h
+#| tbl-pos: H
 # Convert model results to a dataframe
-model_results <- tidy(RTLMERTest, effects = "fixed") %>%
+RT_model_results <- tidy(RTLMERTest, effects = "fixed") %>%
+  filter(term!="(Intercept)") %>%
   select(term, estimate, std.error, statistic, p.value) %>%
   mutate(term = case_when(
-    term == "(Intercept)" ~ "Intercept",
     term == "supportDiffReAdj_scaled" ~ "Difference in Support",
     term == "FamiliarDiff_Consistent_scaled" ~ "Difference in Topic Familiarity",
     term == "MoralDiff_Consistent_scaled" ~ "Difference in Moral Conviction",
@@ -244,17 +288,18 @@ model_results <- tidy(RTLMERTest, effects = "fixed") %>%
   )
 
 # Create a well-formatted LaTeX table
-kable(model_results, booktabs = TRUE) %>%
+kable(RT_model_results, booktabs = TRUE) %>%
   kable_styling(latex_options = c("HOLD_position", "striped"))
 
 
 ```
 
-Topic familiarity , as well as the difference in moral convictions as well as the difference in support between the two images of protestors, were found to be stronger predictors of response time. However , as @tbl-RTTable demonstrates the strongest predictor was the variable "protest indicator", which indicates the "thumbs-up" and "thumbs-down" symbols shown next to the topics. Protest indication was measured binarily, where +1 indicated a thumbs-up, and a -1 indicated a thumbs-down. The linear regression model indicates that when the protest indicator was a thumbs up, participants were able to respond significantly faster than the other way around. The second strongest predictor was the different in political support ($\beta$ = `r round(Support_coefficient,3)`, p `r if (Support_coefficient<0.001) "<0.001" else paste0("=",Support_coefficient)`)
+Topic familiarity , as well as the difference in moral convictions as well as the difference in support between the two images of protestors, were found to be stronger predictors of response time. However , as @tbl-RTTable demonstrates the strongest predictor was the variable "protest indicator", which indicates the "thumbs-up" and "thumbs-down" symbols shown next to the topics`r statpresent(ProtestView,RTLMERTest)`. Protest indication was measured binarily, where +1 indicated a thumbs-up, and a -1 indicated a thumbs-down. The linear regression model indicates that when the protest indicator was a thumbs up, participants were able to respond significantly faster than the other way around. The second strongest predictor was the different in political support `r statpresent(supportDiffReAdj_scaled,RTLMERTest)`. Familiarity of the topics was significant in three different ways: the familiarity of the image on the right `r statpresent(Familiar2_scaled,RTLMERTest)`, the familiarity of the image on the left `r statpresent(Familiar1_scaled,RTLMERTest)`, and the difference of familiarity between the two images `r statpresent(FamiliarDiff_Consistent_scaled,RTLMERTest)`.
 
 When running the linear mixed effects regression for the total fixation durations, all of the independent variables as well as the demographic variables. The demographic variables were removed from the model as all of them were statistically not significant.
 
-```{r TFD-test}
+```{r TFD-test,echo=FALSE,include=FALSE}
+#| label: TFD-test
 TFDLMERTest<-lmer(Total_Fixation_Duration~supportDiffReAdj_scaled +
                                   FamiliarDiff_Consistent_scaled +
                                   MoralDiff_Consistent_scaled +
