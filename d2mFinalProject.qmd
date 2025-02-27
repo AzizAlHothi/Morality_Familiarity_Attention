@@ -1,5 +1,5 @@
 ---
-title: "Justice Through Familiar Eyes: How Moral Convictions and Repeated Exposure Influence Cognitive Functions"
+title: "Morality Through Familiar Eyes: How Moral Convictions and Repeated Exposure Influence Cognitive Functions"
 shorttitle: "Moral Convictions, Familiarity and Attention"
 author:
   - name: "Abdulaziz AlHothi"
@@ -24,12 +24,15 @@ suppress-author-note: true
 ```{r Setup-chunk,echo=FALSE,message=FALSE,warning=FALSE}
 #| label: Setup-chunk 
 #In this chunk , I will require and load all the required packages to render and run the code in this qmd file. 
+
+#Some external packages are commented out , if you consent to them being loaded and installed, remove the comment hash "#"
 require(tidyverse)
 require(readr)
 require(tidyr)
 require(dplyr)
 require(stringr)
 require(ggeffects)
+require(forcats)
 library(knitr)
 library(broom.mixed)
 library(gt)
@@ -41,7 +44,7 @@ library(car)
 library(kableExtra)
 library(performance)
 
-#the full dataset will be saved separately, since I don't need most of the columns and the variables 
+#Create a dataframe out of the csv file 
 newset<-read_csv("Main_Beh_TFD_Updated.csv",show_col_types = FALSE)
 
 newset<-newset %>%  #introducing two new variables called MoralDiff_consistent and FamiliarDiff_Consistent, which will be outlined in the manuscript. 
@@ -50,16 +53,22 @@ newset<-newset %>%  #introducing two new variables called MoralDiff_consistent a
          FamiliarDiff_Consistent= case_when((consistent==1&LeftChoice==1)|(consistent==0&LeftChoice==0)~                                           Familiar1 - Familiar2,
                                          (consistent==0&LeftChoice==1)|(consistent==1&LeftChoice==0)~                                              Familiar2-Familiar1),
          chosenFamiliar= case_when(LeftChoice==1~Familiar1,
-            LeftChoice==0~Familiar1),
+            LeftChoice==0~Familiar1), #introducing a chosenFamiliar and chosenMoral to analyze selection
          chosenMoral=case_when(LeftChoice==1~Moral_left,
                                LeftChoice==0~Moral_right),
-         ProtestView=as.factor(ProtestView),
-         Topic.selected=as.factor(if_else(LeftChoice==1,"Left Topic","Right Topic")),
-         across(c(Right_Fixation,Right_nFixation,Unchosen_nFixations,Unchosen_Fixation,Chosen_Fixation,Chosen_nFixations,Left_nFixations,Left_Fixation,Total_nFixations),as.numeric))%>% 
+         ProtestView=fct(as.character(ProtestView)), #changing ProtestView to a factor to ease facet use
+         Topic.selected=fct(if_else(LeftChoice==1,"Left Topic Selected","Right Topic Selected")),#Introducing a          Topic.selected variable to enable faceting in ggplots
+         across(c(Right_Fixation,Right_nFixation,Unchosen_nFixations,Unchosen_Fixation,Chosen_Fixation,Chosen_nFixations,Left_nFixations,Left_Fixation,Total_nFixations),as.numeric), #converting all variables of interest into numeric variables for analysis. 
+          Subject=str_squish(Subject), #ensuring no whitespace in the Subject Column 
+          Subject=str_replace_na(Subject,"NA"), #ensuring all missing NAs in the Subject Column are handled
+          ProtestView=fct_relevel(ProtestView), 
+          ProtestView1=as.numeric(ProtestView))%>% #reshuffling the factor levels for Protestview, and introducing a numeric protest view to ease statistical analysis. 
+
   filter( #Looking only at fixations more than 300 ms
   Total_Fixation_Duration>300,Total_nFixations>0,Right_Fixation>150,Left_Fixation>150) %>%
-  unite(combined.issues,Issue_left,Issue_right,sep = " vs. ")%>% #combining all the issues in one column using. a tidyr funciton
- arrange(SubjectNumber)
+  unite(combined.issues,Issue_left,Issue_right,sep = " vs. ")%>% #combining all the issues in one column using. a tidyr function
+ arrange(SubjectNumber) #arranging by Subject Number 
+
 
 ```
 
@@ -101,6 +110,8 @@ statpresent <- function(variable, stattest) {
 
 
 ```
+# Abstract 
+Moral convictions—deeply held beliefs about right and wrong—are typically considered rigid and resistant to change, often driven by intuitive emotional responses rather than deliberative reasoning. However, psychological research suggests that repeated exposure to stimuli enhances familiarity, which can, in turn, shape attitudes and cognitive processing. This study investigates the role of familiarity as a potential mechanism influencing moral convictions, with a specific focus on how repeated exposure to socio-political issues modulates attention and decision-making. Using an eye-tracking paradigm, participants completed a decision-making task in which they selected between two protest-related images, each associated with a socio-political issue that varied in familiarity and moral conviction intensity. Fixation duration, a key measure of cognitive engagement, was analyzed to determine whether highly familiar and morally charged topics reduce deliberative processing. Statistical analyses, including mixed-effects models and ANOVA, revealed that higher familiarity with a topic significantly predicted stronger moral conviction, supporting the hypothesis that exposure reinforces intuitive moralization. Additionally, familiarity and moral conviction were found to negatively predict fixation duration, suggesting that these factors decrease attention allocation, potentially bypassing cognitive scrutiny. These findings highlight the cognitive effects of exposure-driven familiarity on moral attitudes, contributing to a deeper understanding of how repeated interactions with socio-political content influence moral judgment. The implications of this research extend to digital media consumption, political polarization, and strategies for promoting critical thinking in moral discourse.
 
 # Introduction
 
@@ -122,7 +133,13 @@ Exposure and familiarity with socio-political issues might play a role in how ou
 
 ## Eye-Tracking’s Potential Insight in Moral Decision-Making
 
-Eye fixation duration is a reliable measure of attention allocation in adults (Papageorgiou et al., 2014) and cognitive resources in the context of decision-making (Jang et al., 2020). Additionally, fixation duration may indicate higher demands on memory and cognitive processes (Wang et al., 2014; Zagermann et al., 2016; Goldberg & Helfman, 2010). While there are few studies that utilize eye-tracking in the domain of moral judgment and decisions (Fiedler & Glöckner, 2015), There are no studies looking at moral conviction that feature eye-tracking as a modality for measuring cognition. Eye-tracking can provide insight into how attention and other deliberative cognitive processes are modulated in the presence of sociopolitical issues with a measured familiarity and moral conviction score. Fixation duration will be operationalized as a measure of attention and cognitive processing. I hypothesize that sociopolitical issues that are more familiar and with a higher moral conviction score will reduce the total fixation duration. \# Current Study The moral psychological literature demonstrates that moral convictions— inflexible and rigid moral beliefs—are, by default, emotional and intuitive. Furthermore, moral psychology research reveals that emotional regulation, as well as deliberative cognitive processes, shape moral beliefs to be more flexible and less rigid. Conversely, the Hansen & Wänke (2009) study indicates that familiarity, which stems from repeated exposure, reduces attention allocation and shapes emotional and cognitive engagement with social attitudes. However, no studies examine the relationship between familiarity or repeated exposure to moral convictions. This gap presents a compelling case to examine how familiarity and attention interact to shape moral conviction, and whether familiarity is one of the mechanisms by which moral convictions occur. In this study, I will examine the research gap through two primary questions: What is the relationship between familiarity and moral conviction, and does familiarity and moral conviction predict attention allocation? My first hypothesis posits that familiarity will be positively correlated with stronger moral convictions. Familiarity, which acts as a measure of exposure, is hypothesized to facilitate moral conviction by bypassing deliberative cognitive processes and engaging intuitive emotional responses. This reasoning stems from findings on the mere exposure effects, which link repeated exposure to positive affect and intuitive engagement (Montoya et al., 2017; Hansen & Wänke, 2009), and the work on moral conviction, which establishes moral conviction as inflexible and universalized moral beliefs associated with emotions and automatic responses (Skitka & Morgan, 2014; Cecchini, 2023). The second hypothesis predicts that familiarity and moral conviction will negatively predict attention allocation in the context of decision-making tasks. Issues with high familiarity and moral conviction will predict reduced fixation duration as a measure of attention allocation. This prediction aligns with prior research demonstrating that familiar stimuli demand less cognitive effort (Young & Claypool, 2010), as well as the view that intuitive moral convictions form in the absence of deliberative scrutiny.
+Eye fixation duration is a reliable measure of attention allocation in adults (Papageorgiou et al., 2014) and cognitive resources in the context of decision-making (Jang et al., 2020). Additionally, fixation duration may indicate higher demands on memory and cognitive processes (Wang et al., 2014; Zagermann et al., 2016; Goldberg & Helfman, 2010). While there are few studies that utilize eye-tracking in the domain of moral judgment and decisions (Fiedler & Glöckner, 2015), There are no studies looking at moral conviction that feature eye-tracking as a modality for measuring cognition. Eye-tracking can provide insight into how attention and other deliberative cognitive processes are modulated in the presence of sociopolitical issues with a measured familiarity and moral conviction score. Fixation duration will be operationalized as a measure of attention and cognitive processing. I hypothesize that sociopolitical issues that are more familiar and with a higher moral conviction score will reduce the total fixation duration. Furthermore, the number of fixations have been a relevant indication of cognitive load in decision-making trials (Zagermann, Pfeil, & Reiterer, 2018). Since moral convictions are involved with fast intuitive decisions, I suspect that they reduce the cognitive load experienced in decision-making.  Accordingly, I also hypothesize that large differences in moral convictions and topic familiarity will result in a smaller count of fixation occurences, optimizing a more efficient cognitive load during decision-making. 
+
+
+
+# Current Study 
+
+The moral psychological literature demonstrates that moral convictions— inflexible and rigid moral beliefs—are, by default, emotional and intuitive. Furthermore, moral psychology research reveals that emotional regulation, as well as deliberative cognitive processes, shape moral beliefs to be more flexible and less rigid. Conversely, the Hansen & Wänke (2009) study indicates that familiarity, which stems from repeated exposure, reduces attention allocation and shapes emotional and cognitive engagement with social attitudes. However, no studies examine the relationship between familiarity or repeated exposure to moral convictions. This gap presents a compelling case to examine how familiarity and attention interact to shape moral conviction, and whether familiarity is one of the mechanisms by which moral convictions occur. In this study, I will examine the research gap through two primary questions: What is the relationship between familiarity and moral conviction, and does familiarity and moral conviction predict attention allocation? My first hypothesis posits that topic familiarity will be positively correlated with stronger moral convictions. Topic familiarity, which acts as a measure of exposure, is hypothesized to facilitate moral conviction by bypassing deliberative cognitive processes and engaging intuitive emotional responses. This reasoning stems from findings on the mere exposure effects, which link repeated exposure to positive affect and intuitive engagement (Montoya et al., 2017; Hansen & Wänke, 2009), and the work on moral conviction, which establishes moral conviction as inflexible and universalized moral beliefs associated with emotions and automatic responses (Skitka & Morgan, 2014; Cecchini, 2023). The second hypothesis predicts that the difference between the two choices in topic familiarity and moral conviction will negatively predict attention allocation in the context of decision-making tasks. Trials with high difference in topic familiarity and moral conviction will predict reduced fixation duration as a measure of attention allocation. This prediction aligns with prior research demonstrating that familiar stimuli demand less cognitive effort (Young & Claypool, 2010), as well as the view that intuitive moral convictions form in the absence of deliberative scrutiny. Finally, the third hypothesis predicts that moral conviction and topic familiarity will be negatively associated with the count of fixation occurences. Since fixation count indicates cognitive load experienced during decision-making, the higher the difference in moral conviction and topic familiarity, the easier the decision-making process and thus less cognitive load will be experienced.
 
 # Methods
 
@@ -199,40 +216,64 @@ In the time-constrained selection trials, participants on average spent `r round
 
 # Convert data to long format for ggplot
 fixation_data <- newset %>%
-  select(SubjectNumber, Left_Fixation, Right_Fixation) %>%
+  select(SubjectNumber, Left_Fixation, Right_Fixation, Topic.selected) %>%
   pivot_longer(cols = c(Left_Fixation, Right_Fixation), 
                names_to = "Topic_Side", values_to = "Fixation_Duration") %>%
-  mutate(Topic_Side = if_else(Topic_Side == "Left_Fixation", "Left Topic", "Right Topic"))  # Rename for clarity
+  mutate(
+    Topic_Side = if_else(Topic_Side == "Left_Fixation", "Fixation on Left Topic", "Fixation on Right Topic")
+  )
 
-# Use a more robust approach with just geom_smooth directly on binned data
-# First, create bins manually
-binwidth <- 100
+# Compute mean fixation durations for each Topic_Side within each Topic.selected condition
+mean_fixations <- fixation_data %>%
+  group_by(Topic.selected, Topic_Side) %>%
+  summarise(Mean_Fixation = mean(Fixation_Duration, na.rm = TRUE), .groups = "drop")
+
+# Define bin width for histogram smoothing
+binwidth <- 100  
 fixation_bins <- fixation_data %>%
   mutate(bin = floor(Fixation_Duration / binwidth) * binwidth) %>%
-  count(Topic_Side, bin) %>%
-  # Ensure both sides have the same bins for smoother comparison
-  complete(Topic_Side, bin = seq(min(bin), max(bin), by = binwidth), fill = list(n = 0))
+  count(Topic_Side, bin, Topic.selected) %>%
+  complete(Topic_Side, bin = seq(min(bin), max(bin), by = binwidth), Topic.selected, fill = list(n = 0))
 
-# Now plot with smooth lines
+# Generate the enhanced density plot with mean fixation overlay and labels
 ggplot(fixation_bins, aes(x = bin, y = n, color = Topic_Side)) +
+  
+  # Smoothed trend lines using LOESS regression
   geom_smooth(method = "loess", formula = y ~ x, span = 0.3, se = FALSE, linewidth = 1.2) +
+  
+  # Dashed vertical lines to represent mean fixation durations
+  geom_vline(data = mean_fixations, aes(xintercept = Mean_Fixation, color = Topic_Side),
+             linetype = "dashed", linewidth = 0.5) +  # Reduced width of dashed line
+  
+  # Labels for mean fixation durations, placed slightly above the baseline
+  
+  # Axis labels and title
   labs(
+    subtitle = "Dashed lines indicate average value",
     x = "Fixation Duration (ms)",
     y = "Trial Count",
     color = "Topic Side"
   ) +
-  scale_color_manual(values = c("Left Topic" = "steelblue", "Right Topic" = "orange")) +
+  
+  # Custom colors to distinguish left/right fixations
+  scale_color_manual(values = c("Fixation on Left Topic" = "steelblue", "Fixation on Right Topic" = "orange")) +
+  
+  # Minimal theme for cleaner visualization
   theme_minimal() +
   theme(
-    legend.position = "top",
-    panel.grid.minor = element_blank()
-  )
+    legend.position = "top",  # Move legend to the top for clarity
+    panel.grid.minor = element_blank(), # Remove minor grid lines for better readability
+    plot.subtitle= element_text(face = "italic")) +
+  
+  # Facet by Topic.selected to separate left vs right topic selections
+  facet_wrap(~ Topic.selected)
 
 ```
 ```{r one-way-anova-test,echo=FALSE,include=FALSE}
 #| label: one-way-anova-test
-#in this chunk , I will setup a one way anova test to determine if choosing the left topic correlated with a faster response time. 
+#in this chunk , I will setup two one way anova tests to determine if choosing the left topic correlated with a faster response time, and if it correlated with less fixation on either screen. 
 
+#Response Time Anova
 anova_result<-aov(RT~Topic.selected, data=newset)
 anova_summary<- summary(anova_result)
 F_value <- anova_summary[[1]]$`F value`[1]
@@ -240,10 +281,20 @@ df_between <- anova_summary[[1]]$Df[1]  # df for Topic.selected
 df_within <- anova_summary[[1]]$Df[2]  # df for residuals
 p_value <- anova_summary[[1]]$`Pr(>F)`[1]
 
-anova_print <- paste("F(", df_between, ",", df_within, ") =", round(F_value, 2), ", p =", round(p_value, 3))
 
+#Topic Fixation Anova
+anova_result2<- aov(Left_Fixation~Topic.selected, data=newset)
+anova_summary2<- summary(anova_result2)
+F_value2 <- anova_summary2[[1]]$`F value`[1]
+df_between2 <- anova_summary2[[1]]$Df[1]  # df for Topic.selected
+df_within2 <- anova_summary2[[1]]$Df[2]  # df for residuals
+p_value2 <- anova_summary2[[1]]$`Pr(>F)`[1]
+
+
+anova_print <- paste("F(", df_between, ",", df_within, ") =", round(F_value, 2), ", p =", round(p_value, 3))
+anova_print2 <- paste("F(", df_between2, ",", df_within2, ") =", round(F_value2, 2), ifelse(p_value2<0.001,"p<0.001",paste("p=",p_value2)))
 ```
-As @tbl-Left-Right-General-Results highlight, the average fixation duration and number of fixations across the left and right topics were fairly close across all trials. Where @fig-densityplot further illustrates the closeness of the eye-tracking values across the two opposing topics across trials. Through an one-way ANOVA test , it was confirmed that the selection of a topic on the left or right did not influence the response time in a meaningful way (`r anova_print`).
+As @tbl-Left-Right-General-Results highlight, the average fixation duration and number of fixations across the left and right topics were fairly close across all trials. Where @fig-densityplot further illustrates the closeness of the eye-tracking values across the two opposing topics across trials throughout both selections.  Through an one-way ANOVA test , it was confirmed that the selection of a topic on the left or right did not influence the response time in a meaningful way (`r anova_print`). However , a one-way anova test show that participants fixated more on the topic that they selected (`r anova_print2`). 
 
 
 
@@ -398,8 +449,93 @@ p_moraleffectplot
 The protest indication variable, which indicates whether the trial featured a thumbs-up or a thumbs-down next to the topics, was the strongest predictor in the model, trending negatively with fixation duration `r statpresent(ProtestView1,TFDLMERTest)`. This means that when the trial features a thumbs-up indicator instead of a thumbs down, the fixation duration time is severely reduced, translating in a more effective attention allocation when the protestors are seen as supporting the cause than when they are opposing it. The difference in moral conviction scores was also a statistically significant negative predictor of fixation duration `r statpresent(MoralDiff_Consistent_scaled,TFDLMERTest)`. Indicating that the more a topic is moralized than the other, the more effective the attention allocation is. Topic familiarity was statistically significant in two different forms: the difference of topic familiarity significantly reduced fixation duration `r statpresent (FamiliarDiff_Consistent_scaled,TFDLMERTest)`, and the topic familiarity of the left image specifically was an even stronger negative predictor of fixation duration `r statpresent(Familiar1_scaled,TFDLMERTest)`. The strong predictive value of the left-hand topic's familiarity may reflect a scanning bias induced by habitual left-to-right reading. Since readers of the English lanugage are accustomed to beginning their visual exploration on the left, initial attention is more readily allocated to left-side stimuli. The interaction between the differences of topic familiarity and moral conviction scores were negative, but not statistically significant `r statpresent(FamiliarDiff_Consistent_scaled:MoralDiff_Consistent_scaled,TFDLMERTest)`. @fig-moraleffectplot illustrates the effect of the difference in moral conviction, political support difference, and protest indication as predictors of eye fixation duration (attention allocation).
 
 
-## Moral Convictions and Topic Familiarity as Predictors of Decision Difficulty and Cognitive Load
- 
+
+```{r Cogniload-test,echo=FALSE,include=FALSE}
+#| label: Cogniload-test 
+#in this chunk , I will run a linear mixed effects regression analysis to test whether or not differences in topic familiarity and moral convictions predicted a reduced cognitive load or not by looking at fixation count as a dependent variable 
+CogniloadLMERTest<-lmer(Total_nFixations ~supportDiffReAdj_scaled +
+                                  FamiliarDiff_Consistent_scaled *
+                                  MoralDiff_Consistent_scaled +
+                                  ProtestView +
+                                  Familiar1_scaled +
+                                  (1|Subject),data=newset)
+summary(CogniloadLMERTest)
+
+```
+
+```{r fig-clmoraleffectplot}
+#| label: fig-clmoraleffectplot
+#| fig-show: hold
+#| fig-cap: The Effect of Moral Conviction Difference, Political Support Difference, and Protest Indication on Fixation Count
+#| fig-height: 4
+#| fig-width: 6
+#| fig-pos: h
+p_clmoraleffectplot <- plot_model(
+  CogniloadLMERTest, 
+  type = "pred",
+  terms = c("MoralDiff_Consistent_scaled", "supportDiffReAdj_scaled[1,2,3,4,5]", "ProtestView"),  # Facet by ProtestView
+  ci.lvl = 0.95,
+  facet.grid=TRUE
+) +
+  theme_classic() +
+  labs(
+    x = "Moral Conviction Difference",
+    y = "Fixation Count per Trial",
+    color = "Support Difference \n(Chosen - Unchosen)",
+    title = ""
+  )
+
+# Rename facets for clarity (Optional)
+p_clmoraleffectplot$data$facet <- ifelse(
+  p_clmoraleffectplot$data$facet == "-1", 
+  "Thumbs-down (oppose)", 
+  "Thumbs-up (support)"
+)
+
+p_clmoraleffectplot
+
+```
+
+```{r fig-clfamiliareffectplot}
+#| label: fig-clfamiliareffectplot
+#| fig-show: hold
+#| fig-cap: The Effect of Topic Familiarity Difference, Political Support Difference, and Protest Indication on Fixation Count
+#| fig-height: 4
+#| fig-width: 6
+#| fig-pos: h
+p_clfamiliareffectplot <- plot_model(
+  CogniloadLMERTest, 
+  type = "pred",
+  terms = c("FamiliarDiff_Consistent_scaled", "supportDiffReAdj_scaled[1,2,3,4,5]", "ProtestView"),  # Facet by ProtestView
+  ci.lvl = 0.95,
+  facet.grid=TRUE
+) +
+  theme_classic() +
+  labs(
+    x = "Topic Familiarity Difference",
+    y = "Fixation Count per Trial",
+    color = "Support Difference \n(Chosen - Unchosen)",
+    title = ""
+  )
+
+# Rename facets for clarity (Optional)
+p_clfamiliareffectplot$data$facet <- ifelse(
+  p_clfamiliareffectplot$data$facet == "-1", 
+  "Thumbs-down (oppose)", 
+  "Thumbs-up (support)"
+)
+
+p_clfamiliareffectplot
+
+```
+
+## Moral Convictions and Topic Familiarity as Predictors of Cognitive Load
+As a main effect, difference in moral convictions were statistically significant in negatively predicting fixation count `r statpresent(MoralDiff_Consistent_scaled,CogniloadLMERTest)`,  as well as differences in topic familiarity `r statpresent(FamiliarDiff_Consistent_scaled,CogniloadLMERTest)`. Furthermore , the interaction between moral convictions and topic familiarity were statistically significant in negatively predicting fixation count , with a small effect `r statpresent(FamiliarDiff_Consistent_scaled:MoralDiff_Consistent_scaled,CogniloadLMERTest)`. Protest Indication (whether the trial featured a thumbs-up or thumbs-down) was the strongest negative predictor of fixation count `r statpresent(ProtestView1,CogniloadLMERTest)`. Difference in political support was also statistically significant in reducing the fixation count `r statpresent(supportDiffReAdj_scaled,CogniloadLMERTest)`.
+
+
+as @fig-clmoraleffectplot and @fig-clfamiliareffectplot indicate, moral convictions and topic familiarity drive a reduction in fixation counts per trial. Which indicates the role that moral convictions and topic familiarity play in optimizing the cognitive load in decision-making. However, the difference in moral conviction illustrates a sharper negative trend in fixation count than differences in topic familiarity. 
+
+
 # Discussion
 
 This study aims to address a critical gap in moral psychology by exploring the intersection of familiarity, attention and moral conviction. While existing research examined moral convictions in terms of neural and behavioral effects, few studies explore the mechanisms of moral conviction in terms of cognitive processes. This study offers the novel approach of utilizing eye-tracking to measure allocated cognitive resources in moral context. Eye-tracking builds upon prior findings that recognizes both morality and familiarity’s disposition towards intuition rather than deliberation. Through this approach, the role of familiarity as a mechanism for moral conviction may help explain the escalating moral divide in the age of constant exposure through social media. Understanding familiarity’s role as a factor in cognitive processes in moral context could inform strategies for media literacy programs or educational interventions to promote critical thinking in the ever-changing socio-political landscape. While this study may not explain familiarity as a causal factor, it will lay the foundations for future research to investigate the interplay between familiarity, moral conviction and deliberative cognitive processes.
