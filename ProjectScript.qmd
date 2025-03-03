@@ -15,6 +15,7 @@ format:
     figsintext: true
     floatsintext: true
     keep-tex: true
+    documentmode: man
 figsintext: true
 floatsintext: true
 number-sections: FALSE
@@ -128,19 +129,19 @@ Moral judgments are characteristically fast, as they often arise from automatic,
 
 ## The Role of Deliberative Cognitive Processes in Moral Convictions
 
-While emotions dominate the formation of moral judgments, deliberative processes can still influence the development and flexibility of moral convictions. Moral convictions, defined as rigid and inflexible beliefs that are resistant to change, often arise from quick, emotionally driven processes [@skitka_moral_2005-1]. These convictions’ intuitive and unyielding nature contrasts with deliberative cognitive processes that promote flexibility and situational adaptability [@skitka_social_2014; @cecchini_moral_2023]. Emotion regulation, for instance, facilitates deliberative processes, allowing for more reflective moral judgments [@helion_role_2016]. Furthermore, deliberation can counter the rigidity of moral convictions by fostering context-sensitive flexibility in moral judgments [@bartels_principled_2008-1]. Deliberation and purposeful cognition introduce an element of adaptability that contrasts with the inflexibility of strong moral convictions. However, much of the research on cognitive processes in moral decision-making remains theoretical or philosophical, with limited experimental studies confirming these perspectives empirically [@fiedler_attention_2015-1].
+While emotions dominate the formation of moral judgments, deliberative processes can still influence the development and flexibility of moral convictions. Moral convictions, defined as rigid and inflexible beliefs that are resistant to change, often arise from quick, emotionally driven processes [@skitka_moral_2005]. These convictions’ intuitive and unyielding nature contrasts with deliberative cognitive processes that promote flexibility and situational adaptability [@skitka_social_2014; @cecchini_moral_2023]. Emotion regulation, for instance, facilitates deliberative processes, allowing for more reflective moral judgments [@helion_role_2016]. Furthermore, deliberation can counter the rigidity of moral convictions by fostering context-sensitive flexibility in moral judgments [@bartels_principled_2008]. Deliberation and purposeful cognition introduce an element of adaptability that contrasts with the inflexibility of strong moral convictions. However, much of the research on cognitive processes in moral decision-making remains theoretical or philosophical, with limited experimental studies confirming these perspectives empirically [@fiedler_attention_2015].
 
 ## Familiarity, Reduced Attention, and Moral Conviction Through Exposure
 
-Exposure and familiarity with socio-political issues might play a role in how our cognition and emotions are impacted. A meta-analysis by @montoya_re-examination_2017-1 found that excessive exposure to stimuli is associated with positive affect and reduces attention. This meta-analysis suggests that familiarity feeds into the emotional response while simultaneously inhibiting attention allocation, which is one of the cognitive processes essential for deliberation [@young_mere_2010]. Moreover, unconscious familiarity correlates more with attitude formation than conscious recognition [@hansen_liking_2009-1]. The reduction in attention that results from familiarity and repeated exposure could be one of the mechanisms involved in moral conviction. Familiarity’s reduction in attentive engagement suggests that high exposure can foster rigid, intuitive, and emotionally charged moral stances by limiting any opportunities for critical evaluation [@hansen_liking_2009-1;@bartels_principled_2008-1]. While the effects of mere exposure on attention have been established in cognitive psychology literature, very few research papers have explored this effect as a mechanism for moral convictions. With familiarity serving as a proxy measure for high exposure [@montoya_re-examination_2017-1;@hansen_liking_2009-1], I predict that repeated exposure facilitates moral conviction through evoking positive emotions and attenuating deliberative cognitive processes.
+Exposure and familiarity with socio-political issues might play a role in how our cognition and emotions are impacted. A meta-analysis by @montoya_re-examination_2017 found that excessive exposure to stimuli is associated with positive affect and reduces attention. This meta-analysis suggests that familiarity feeds into the emotional response while simultaneously inhibiting attention allocation, which is one of the cognitive processes essential for deliberation [@young_mere_2010]. Moreover, unconscious familiarity correlates more with attitude formation than conscious recognition [@hansen_liking_2009]. The reduction in attention that results from familiarity and repeated exposure could be one of the mechanisms involved in moral conviction. Familiarity’s reduction in attentive engagement suggests that high exposure can foster rigid, intuitive, and emotionally charged moral stances by limiting any opportunities for critical evaluation [@hansen_liking_2009;@bartels_principled_2008-1]. While the effects of mere exposure on attention have been established in cognitive psychology literature, very few research papers have explored this effect as a mechanism for moral convictions. With familiarity serving as a proxy measure for high exposure [@montoya_re-examination_2017;@hansen_liking_2009], I predict that repeated exposure facilitates moral conviction through evoking positive emotions and attenuating deliberative cognitive processes.
 
 ## Eye-Tracking’s Potential Insight in Moral Decision-Making
 
-Eye fixation duration is a reliable measure of attention allocation in adults [@papageorgiou_individual_2014-1] and cognitive resources in the context of decision-making [@jang_optimal_2020-1]. Additionally, fixation duration may indicate higher demands on memory and cognitive processes [@wang_eye-tracking_2014-1;@zagermann_studying_2018;@goldberg_comparing_2010-1]. While there are few studies that utilize eye-tracking in the domain of moral judgment and decisions [@fiedler_attention_2015-1], There are no studies looking at moral conviction that feature eye-tracking as a modality for measuring cognition. Eye-tracking can provide insight into how attention and other deliberative cognitive processes are modulated in the presence of sociopolitical issues with a measured familiarity and moral conviction score. Fixation duration will be operationalized as a measure of attention and cognitive processing. I hypothesize that sociopolitical issues that are more familiar and with a higher moral conviction score will reduce the total fixation duration. Furthermore, the number of fixations have been a relevant indication of cognitive load in decision-making trials [@zagermann_studying_2018]. Since moral convictions are involved with fast intuitive decisions, I suspect that they reduce the cognitive load experienced in decision-making.  Accordingly, I also hypothesize that large differences in moral convictions and topic familiarity will result in a smaller count of fixation occurences, optimizing a more efficient cognitive load during decision-making. 
+Eye fixation duration is a reliable measure of attention allocation in adults v and cognitive resources in the context of decision-making [@jang_optimal_2020-1]. Additionally, fixation duration may indicate higher demands on memory and cognitive processes [@wang_eye-tracking_2014-1;@zagermann_studying_2018;@goldberg_comparing_2010-1]. While there are few studies that utilize eye-tracking in the domain of moral judgment and decisions [@fiedler_attention_2015-1], There are no studies looking at moral conviction that feature eye-tracking as a modality for measuring cognition. Eye-tracking can provide insight into how attention and other deliberative cognitive processes are modulated in the presence of sociopolitical issues with a measured familiarity and moral conviction score. Fixation duration will be operationalized as a measure of attention and cognitive processing. I hypothesize that sociopolitical issues that are more familiar and with a higher moral conviction score will reduce the total fixation duration. Furthermore, the number of fixations have been a relevant indication of cognitive load in decision-making trials [@zagermann_studying_2018]. Since moral convictions are involved with fast intuitive decisions, I suspect that they reduce the cognitive load experienced in decision-making.  Accordingly, I also hypothesize that large differences in moral convictions and topic familiarity will result in a smaller count of fixation occurences, optimizing a more efficient cognitive load during decision-making. 
 
 # Current Study 
 
-The moral psychological literature demonstrates that moral convictions— inflexible and rigid moral beliefs—are, by default, emotional and intuitive. Furthermore, moral psychology research reveals that emotional regulation, as well as deliberative cognitive processes, shape moral beliefs to be more flexible and less rigid. Conversely, the @hansen_liking_2009-1 study indicates that familiarity, which stems from repeated exposure, reduces attention allocation and shapes emotional and cognitive engagement with social attitudes. However, no studies examine the relationship between familiarity or repeated exposure to moral convictions. This gap presents a compelling case to examine how familiarity and attention interact to shape moral conviction, and whether familiarity is one of the mechanisms by which moral convictions occur. In this study, I will examine the research gap through two primary questions: What is the relationship between familiarity and moral conviction, and does familiarity and moral conviction predict attention allocation? My first hypothesis posits that topic familiarity will be positively correlated with stronger moral convictions. Topic familiarity, which acts as a measure of exposure, is hypothesized to facilitate moral conviction by bypassing deliberative cognitive processes and engaging intuitive emotional responses. This reasoning stems from findings on the mere exposure effects, which link repeated exposure to positive affect and intuitive engagement [@montoya_re-examination_2017-1; @hansen_liking_2009-1], and the work on moral conviction, which establishes moral conviction as inflexible and universalized moral beliefs associated with emotions and automatic responses [@skitka_social_2014;@cecchini_moral_2023]. The second hypothesis predicts that the difference between the two choices in topic familiarity and moral conviction will negatively predict attention allocation in the context of decision-making tasks. Trials with high difference in topic familiarity and moral conviction will predict reduced fixation duration as a measure of attention allocation. This prediction aligns with prior research demonstrating that familiar stimuli demand less cognitive effort [@young_mere_2010], as well as the view that intuitive moral convictions form in the absence of deliberative scrutiny. Finally, the third hypothesis predicts that moral conviction and topic familiarity will be negatively associated with the count of fixation occurences. Since fixation count indicates cognitive load experienced during decision-making, the higher the difference in moral conviction and topic familiarity, the easier the decision-making process and thus less cognitive load will be experienced.
+The moral psychological literature demonstrates that moral convictions— inflexible and rigid moral beliefs—are, by default, emotional and intuitive. Furthermore, moral psychology research reveals that emotional regulation, as well as deliberative cognitive processes, shape moral beliefs to be more flexible and less rigid. Conversely, the @hansen_liking_2009 study indicates that familiarity, which stems from repeated exposure, reduces attention allocation and shapes emotional and cognitive engagement with social attitudes. However, no studies examine the relationship between familiarity or repeated exposure to moral convictions. This gap presents a compelling case to examine how familiarity and attention interact to shape moral conviction, and whether familiarity is one of the mechanisms by which moral convictions occur. In this study, I will examine the research gap through two primary questions: What is the relationship between familiarity and moral conviction, and does familiarity and moral conviction predict attention allocation? My first hypothesis posits that topic familiarity will be positively correlated with stronger moral convictions. Topic familiarity, which acts as a measure of exposure, is hypothesized to facilitate moral conviction by bypassing deliberative cognitive processes and engaging intuitive emotional responses. This reasoning stems from findings on the mere exposure effects, which link repeated exposure to positive affect and intuitive engagement [@montoya_re-examination_2017; @hansen_liking_2009], and the work on moral conviction, which establishes moral conviction as inflexible and universalized moral beliefs associated with emotions and automatic responses [@skitka_social_2014;@cecchini_moral_2023]. The second hypothesis predicts that the difference between the two choices in topic familiarity and moral conviction will negatively predict attention allocation in the context of decision-making tasks. Trials with high difference in topic familiarity and moral conviction will predict reduced fixation duration as a measure of attention allocation. This prediction aligns with prior research demonstrating that familiar stimuli demand less cognitive effort [@young_mere_2010], as well as the view that intuitive moral convictions form in the absence of deliberative scrutiny. Finally, the third hypothesis predicts that moral conviction and topic familiarity will be negatively associated with the count of fixation occurences. Since fixation count indicates cognitive load experienced during decision-making, the higher the difference in moral conviction and topic familiarity, the easier the decision-making process and thus less cognitive load will be experienced.
 
 # Methods
 
@@ -177,9 +178,13 @@ newset <- newset %>%
 
 # Results
 ## General Results 
+```{r Response-Time-LMER,echo=FALSE,include=FALSE}
+RTLMER<-lmer(RT~MoralDiff_Consistent_scaled*FamiliarDiff_Consistent_scaled+ProtestView+supportDiffReAdj_scaled+(1|Subject)+Familiar1_scaled,data=newset)
+```
+
 ```{r tbl-Left-Right-General-Results,echo=FALSE,warning=FALSE}
 #| label: tbl-Left-Right-General-Results
-#| tbl-cap: General Eye-tracking Results for Left and Right Screen Choices
+#| tbl-cap: General eye-tracking results for left and right screen choices
 #| tbl-pos: H
 
 #This chunk should produce a table containing generic statistics for left and right screen selections. 
@@ -209,7 +214,7 @@ gen_stats %>%
 In the time-constrained selection trials, participants on average spent `r round(mean_RT/1000,2)` seconds to complete a topic-selection trial, with a standard deviation of `r round(sd_RT,0)` milliseconds. Within the response time report, the eye-tracker detected that participants spent an average fixation time of `r round(mean_TFD/1000,2)` seconds, with a standard deviation of `r round(sd_TFD,0)` milliseconds. An average of `r round(mean_nFx,1)` fixation occurences were registered per trial , with a standard deviation falling within `r round(sd_nFx,1)` occurences.The fixation rate , which was calculated as the percentage of fixation time by the response time , was found to average around  `r round(mean_FxR,1)`%, with a standard deviation of `r round(sd_FxR,1)`%. 
 ```{r fig-densityplot,warning=FALSE}
 #| label: fig-densityplot
-#| fig-cap: Fixation Duration Frequency Distribution for Left and Right Topics 
+#| fig-cap: Trial Fixation duration frequency distribution for left and right topics.
 #| fig-pos: H
 #| fig-height: 4
 #| fig-width: 6
@@ -320,10 +325,11 @@ pearsontest<-cor.test(newset$Moral_left_scaled,newset$Familiar1_scaled, method =
 corr_estimate<- pearsontest$estimate #the correlation estimate
 corr_pvalue<- pearsontest$p.value #the correlation pvalue
 ```
+
 ```{r fig-alt-effectplot,echo=FALSE}
 #| label: fig-alt-effectplot
 #| fig-show: hold
-#| fig-cap: The effect of topic familiarity on moral conviction score
+#| fig-cap: The effect of topic familiarity on moral conviction score.The shades illustrate 95% high density intervals.
 #| fig-height: 3
 #| fig-width: 5
 #| fig-pos: h
@@ -357,7 +363,7 @@ In running a linear mixed-effects regression model, the familiarity of the socio
 ```{r fig-tileplot, echo= FALSE,fig.pos="h",fig.cap="Count tileplot highlighting the correlation between moral conviction and familiarity of the topic"}
 #| label: fig-tileplot
 #| fig-show: hold
-#| fig-cap: The Count of Topics Across Familiarity and Moral Conviction Score
+#| fig-cap: The count of topics across familiarity and moral conviction score
 #| fig-height: 3
 #| fig-width: 4
 #| fig-pos: h
@@ -368,10 +374,10 @@ library(ggplot2)
 
 # Compute counts for each (Familiar1_scaled, Moral_left) combination
 heatmap_data <- newset %>%
-  count(Familiar1_scaled = round(Familiar1_scaled), Moral_left) 
+  count(Familiar1 = round(Familiar1), Moral_left) 
 
 # Plot heatmap
-ggplot(heatmap_data, aes(x = factor(Familiar1_scaled), y = factor(Moral_left), fill = n)) +
+ggplot(heatmap_data, aes(x = factor(Familiar1), y = factor(Moral_left), fill = n)) +
   geom_tile() + 
   scale_fill_gradient(low = "white", high = "blue") +
   labs(x = "Familiarity Score", y = "Moral Conviction Score", fill = "Count") +
@@ -409,7 +415,7 @@ Familiarity was measured similarly, where the familiarity score for the inconsis
 ```{r fig-moraleffectplot}
 #| label: fig-moraleffectplot
 #| fig-show: hold
-#| fig-cap: The Effect of Moral Conviction Difference, Political Support Difference, and Protest Indication on Eye Fixation Duration
+#| fig-cap: The effect of moral conviction difference, political support difference, and protest indication on eye fixation duration.The shades illustrate 95% high density intervals.
 #| fig-height: 4
 #| fig-width: 6
 #| fig-pos: h
@@ -455,7 +461,7 @@ summary(CogniloadLMERTest)
 ```{r fig-clmoraleffectplot}
 #| label: fig-clmoraleffectplot
 #| fig-show: hold
-#| fig-cap: The Effect of Moral Conviction Difference, Political Support Difference, and Protest Indication on Fixation Count
+#| fig-cap: The effect of moral conviction difference, political support difference, and protest indication on fixation count.The shades illustrate 95% high density intervals.
 #| fig-height: 4
 #| fig-width: 6
 #| fig-pos: h
@@ -488,14 +494,14 @@ p_clmoraleffectplot
 ```{r fig-clfamiliareffectplot}
 #| label: fig-clfamiliareffectplot
 #| fig-show: hold
-#| fig-cap: The Effect of Topic Familiarity Difference, Political Support Difference, and Protest Indication on Fixation Count
+#| fig-cap: The effect of the interaction of moral convictions and topic familiarity on fixation count. The shades illustrate 95% high density intervals.
 #| fig-height: 4
 #| fig-width: 6
 #| fig-pos: h
 p_clfamiliareffectplot <- plot_model(
   CogniloadLMERTest, 
   type = "pred",
-  terms = c("FamiliarDiff_Consistent_scaled", "supportDiffReAdj_scaled[1,2,3,4,5]", "ProtestView"),  # Facet by ProtestView
+  terms = c("FamiliarDiff_Consistent_scaled", "MoralDiff_Consistent_scaled[1,2,3,4]", "ProtestView"),  # Facet by ProtestView
   ci.lvl = 0.95,
   facet.grid=TRUE
 ) +
@@ -503,7 +509,7 @@ p_clfamiliareffectplot <- plot_model(
   labs(
     x = "Topic Familiarity Difference",
     y = "Fixation Count per Trial",
-    color = "Support Difference \n(Chosen - Unchosen)",
+    color = "Moral Difference \n(Chosen - Unchosen)",
     title = ""
   )
 
@@ -524,18 +530,11 @@ as @fig-clmoraleffectplot and @fig-clfamiliareffectplot indicate, moral convicti
 
 # Discussion
 
+Topic familiarity was a strong predictor of moral convictions for sociopolitical issues `r statpresent(Familiar1_scaled,CorrelationLMERTest)`, supporting the hypothesis that repeated exposure to a sociopolitical issue is positively associated with strong moral convictions. Furthermore, both moral convictions `r statpresent(MoralDiff_Consistent_scaled,TFDLMERTest)` and topic familiarity `r statpresent(FamiliarDiff_Consistent_scaled,TFDLMERTest)` were statistically significant in negatively predicting fixation duration , which serves as a measure of attention allocation [@papageorgiou_individual_2014]. This finding means that higher differences in moral conviction and topic familiarity resulted in participants allocating less attention when making a decision. This finding supports previous literature in stating that moral convictions and moral judgments tend to be intuitive and automatic , rather than attentive and deliberative [@skitka_social_2014; @cecchini_moral_2023]. The findings also align with the effect of repeated exposure, measured as topic familiarity, to be associated with reduced attention allocation [@young_mere_2010;@hansen_liking_2009].  
+The findings extended also to the fixation count per trial , where fixation counts were used to indicate decision complexity and difficulty, as participants needed more fixations to gather necessary information to make informed decisions [@Callaway2021]. The experiment found that as main effects, moral convictions `r statpresent(MoralDiff_Consistent_scaled,CogniloadLMERTest)` and topic familiarity `r statpresent(FamiliarDiff_Consistent_scaled,CogniloadLMERTest)` were statistically significant in being negatively associated with fixation count during trials. The results also highlight an interaction between topic familiarity and moral convictions that is statistically significant in negatively predicting fixation counts `r statpresent(FamiliarDiff_Consistent_scaled:MoralDiff_Consistent_scaled,CogniloadLMERTest)`. This finding indicates that repeated exposure of a certain sociopolitical issue, may exacerbate the effect of moral convictions on cognitive deliberation.
+The results support the idea that both repeated exposure [@young_mere_2010;@hansen_liking_2009] and moral convictions attenuate cognitive and deliberative functions like attention allocation [@skitka_moral_2005;@cecchini_moral_2023]. The current study also builds on these findings by elaborating on the interaction of both topic familiarity and moral convictions in the context of decision-making.The findings  also reinforce prior literature on moral intuitions streamline cognitive processes in decision-making [@van_bavel_importance_2012]. Difference in moral convictions reliably resulted in faster responses `r statpresent(MoralDiff_Consistent_scaled,RTLMER)` as well as difference in topic familiarity `r statpresent(FamiliarDiff_Consistent_scaled,RTLMER)`, supporting the notion that judgments stemming from strong moral convictions tend to be more automatic and fast. Decisions involving high contrast in the two topics in terms of moral convictions were also easier to make, which aligns with the notion that moral systems reduce decision costs by reducing the resources required for decision-making [@boyer_religion_2008], such as visual attention. The findings of the paper also align with the existing social psychology literature which looks at moral judgments as value-based decision which stabilize decision-making processes [@Cohen2023]. This study also extends on @skitka_dark_2002 view of moral convictions as inflexible and extreme moral beliefs, by establishing the effects of moral convictions on cognitive functions in decision-making context.
+By finding a correlation and a statistically significant positive association between moral convictions and topic familiarity, the results of this study suggests that repeated exposure may be a mechanism of moral conviction formation,
 This study aims to address a critical gap in moral psychology by exploring the intersection of familiarity, attention and moral conviction. While existing research examined moral convictions in terms of neural and behavioral effects, few studies explore the mechanisms of moral conviction in terms of cognitive processes. This study offers the novel approach of utilizing eye-tracking to measure allocated cognitive resources in moral context. Eye-tracking builds upon prior findings that recognizes both morality and familiarity’s disposition towards intuition rather than deliberation. Through this approach, the role of familiarity as a mechanism for moral conviction may help explain the escalating moral divide in the age of constant exposure through social media. Understanding familiarity’s role as a factor in cognitive processes in moral context could inform strategies for media literacy programs or educational interventions to promote critical thinking in the ever-changing socio-political landscape. While this study may not explain familiarity as a causal factor, it will lay the foundations for future research to investigate the interplay between familiarity, moral conviction and deliberative cognitive processes.
 
-```{r}
-ggplot(moral_effects, aes(x = x, y = predicted)) +
-  geom_line(color = "blue", size = 1) +
-  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2, fill = "blue") +
-  labs(
-    x = "Moral Conviction Difference (Standardized)",
-    y = "Fixations Per Second",
-    title = "Marginal Effect of Moral Conviction Difference on Fixations Per Second"
-  ) +
-  theme_minimal()
-```
 # References
 
