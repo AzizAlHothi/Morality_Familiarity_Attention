@@ -8,13 +8,13 @@ Moral convictions—deeply held beliefs about right and wrong—are typically co
 
 ## Map of the Project Repository
 
-- **_extensions/wjschne/apaquarto/** – APA Quarto extension files
+- **_extensions/wjschne/apaquarto/** – APA Quarto extension files, necessary to render the project report properly
 - **.gitignore** – Git ignore rules
 - **Decision-making Task.png** – Image related to the thesis
-- **Main_beh_TFD_Updated.csv** – Updated database with plots
-- **ProjectScript.pdf** – PDF version of the project script
-- **ProjectScript.qmd** – Quarto Markdown file for the project
-- **README.md** – Repository documentation
+- **Main_beh_TFD_Updated.csv** – Updated database 
+- **ProjectScript.pdf** – PDF version of the project script, requires apaquarto extension to run smoothly
+- **ProjectScript.qmd** – Quarto Markdown file for the project, includes R-script chunks to run effectively
+- **README.md** – Repository documentation 
 - **References.bib** – Bibliography for citations
 - **_quarto.yml** – Quarto configuration file
 - **research-assessment.md** – Research assessment document
