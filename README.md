@@ -1,6 +1,6 @@
 # Morality Through Familiar Eyes: How Moral Convictions and Repeated Exposure Influence Cognitive Function
 
-Welcome to the repository of this research project by Abdulaziz AlHothi. 
+Welcome to the repository of this research project by Abdulaziz AlHothi. This repo will contain all necessary files to run and produce an APA-7 formatted document (pdf and docx) of my research project. Please reach out to me if you run into any problems through my email: a.alhothi@gmail.com 
 
 ## Project Abstract
 
