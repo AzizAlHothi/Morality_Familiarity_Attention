@@ -8,4 +8,13 @@ Moral convictions—deeply held beliefs about right and wrong—are typically co
 
 ## Map of the Project Repository
 
-Morality_Familiarity_Attention/ │── _extensions/ │ └── wjschne/apaquarto/ # APA Quarto extension files │── .gitignore # Git ignore rules │── Decision-making Task.png # Image related to the thesis │── Main_beh_TFD_Updated.csv # Updated database with plots │── ProjectScript.pdf # PDF version of project script │── ProjectScript.qmd # Quarto Markdown file for project │── README.md # Repository documentation │── References.bib # Bibliography for citations │── _quarto.yml # Quarto configuration file │── research-assessment.md # Research assessment document
+- **_extensions/wjschne/apaquarto/** – APA Quarto extension files
+- **.gitignore** – Git ignore rules
+- **Decision-making Task.png** – Image related to the thesis
+- **Main_beh_TFD_Updated.csv** – Updated database with plots
+- **ProjectScript.pdf** – PDF version of the project script
+- **ProjectScript.qmd** – Quarto Markdown file for the project
+- **README.md** – Repository documentation
+- **References.bib** – Bibliography for citations
+- **_quarto.yml** – Quarto configuration file
+- **research-assessment.md** – Research assessment document
