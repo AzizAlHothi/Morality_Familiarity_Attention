@@ -10,10 +10,10 @@ author:
 course: "Data to Manuscript in R"
 professor: "Natalie Dowling"
 due-date: "2025-03-02"
-date: "2025-10-02"
+date: "2025-03-01"
 
 format:
-  html: default  # Ensure HTML is listed first
+  html: default 
   apaquarto-docx: default
   apaquarto-pdf:
     fig-pos: "H"
@@ -34,7 +34,7 @@ tbl-apa: true
 ---
 
 
-```{r libraries-chunk,echo=FALSE,message=FALSE,warning=FALSE}
+```{r}
 #| label: libraries-chunk 
 #| echo: FALSE
 #| message: FALSE
@@ -61,13 +61,14 @@ library(kableExtra)
 library(performance)
 ```
 
-```{r data-setup,echo=FALSE,message=FALSE,warning=FALSE}
-
+```{r}
+#| label: data-cleaning-and-transformation
 #| echo: FALSE
+#| include: False
 #| message: FALSE
 #| warning: FALSE
 #Create a dataframe out of the csv file 
-newset<-read_csv("Main_Beh_TFD_Updated.csv",show_col_types = FALSE)
+newset<-read_csv("Main_Beh_TFD_ROI.csv",show_col_types = FALSE)
 
 newset<-newset %>%  #introducing two new variables called MoralDiff_consistent and FamiliarDiff_Consistent, which will be outlined in the manuscript. 
   mutate(MoralDiff_Consistent= case_when((consistent==1&LeftChoice==1)|(consistent==0&LeftChoice==0)~                                              Moral_left - Moral_right,
@@ -80,7 +81,7 @@ newset<-newset %>%  #introducing two new variables called MoralDiff_consistent a
                                LeftChoice==0~Moral_right),
          ProtestView=fct(as.character(ProtestView)), #changing ProtestView to a factor to ease facet use
          Topic.selected=fct(if_else(LeftChoice==1,"Left Topic Selected","Right Topic Selected")),#Introducing a          Topic.selected variable to enable faceting in ggplots
-         across(c(Right_Fixation,Right_nFixation,Unchosen_nFixations,Unchosen_Fixation,Chosen_Fixation,Chosen_nFixations,Left_nFixations,Left_Fixation,Total_nFixations),as.numeric), #converting all variables of interest into numeric variables for analysis. 
+         across(c(Right_Fixation,Right_nFixation,Unchosen_nFixations,Unchosen_Fixation,Chosen_Fixation,Chosen_nFixations,Left_nFixations,Left_Fixation,Total_nFixations,Consistent_Fixation,Inconsistent_Fixation),as.numeric), #converting all variables of interest into numeric variables for analysis. 
           Subject=str_squish(Subject), #ensuring no whitespace in the Subject Column 
           Subject=str_replace_na(Subject,"NA"), #ensuring all missing NAs in the Subject Column are handled
           ProtestView=fct_relevel(ProtestView), 
@@ -93,9 +94,11 @@ newset<-newset %>%  #introducing two new variables called MoralDiff_consistent a
  arrange(SubjectNumber) #arranging by Subject Number 
 
 
+write_csv(newset, "Processed_Main_Beh_TFD.csv")
+
 ```
 
-```{r Aziz-defined-Functions}
+```{r}
 #| label: Aziz-defined-Functions
 #| echo: FALSE
 #| message: FALSE
@@ -191,7 +194,9 @@ The third hypothesis predicts that moral conviction and topic familiarity will b
 
 To test the first hypothesis, this study employs an experiment designed to examine attention allocation in the context of decision-making. The experiment measures neural activity in brain regions associated with moral decision-making, with eye-tracking used to confirm participants’ attentional engagement. Before the experiment, participants complete a pretest survey assessing 42 different socio-political issues, where familiarity and moral convictions are measured for each individual. Familiarity is rated on a 4-point scale (ranging from "not familiar" to "very familiar"), while moral conviction is assessed using the average of two items on a 5-point scale: “To what extent is your position on [issue] a reflection of your core moral beliefs and convictions?” and “To what extent is your position on [issue] connected to your beliefs about fundamental right and wrong?” [@skitka_social_2014]. Additionally, political support is measured on a 7-point scale (ranging from -3 to +3) to differentiate between moral convictions and political alignment.
 
-The experiment consists of a decision-making task in which participants, in each trial, view two photographs depicting protesters advocating for or against socio-political movements measured in the pretest survey. The final dataset contains 34 participants and 3,621 trials (an average of 107 trials per participant) after data cleaning. A sample size of 34 participants was chosen to balance feasibility and statistical power, given the repeated-measures design, in which each participant contributes data across multiple trials, increasing the study’s statistical sensitivity. To reduce confounding variables, the decision-making task includes thumbs-up or thumbs-down icons next to the photos to indicate whether the protesters support or oppose the issue. These icons help display the range of support levels across trials and mitigate potential collinearity between support and moral conviction ratings. Throughout the decision-making task, all issues rated as familiar appear at least once. The total number of familiar issues per participant ranges from 24 to 40. When the two photographs appear on the screen, participants have four seconds to respond before the program automatically proceeds to the next trial. All stimuli are presented using E-Prime 2.0 (Psychology Software Tools, Pittsburgh, PA, USA). Participants’ eye movements are tracked using an EyeLink 1000 Plus Eye Tracker (SR Research, Ontario, Canada).
+The experiment consists of a decision-making task in which participants, in each trial, view two photographs depicting protesters advocating for or against socio-political movements measured in the pretest survey. The final dataset contains 34 participants and 3,621 trials (an average of 107 trials per participant) after data cleaning. A sample size of 34 participants was chosen to balance feasibility and statistical power, given the repeated-measures design, in which each participant contributes data across multiple trials, increasing the study’s statistical sensitivity. To reduce the possibility of collinearity between political support and moral conviction scores, the decision-making task includes thumbs-up or thumbs-down icons next to the photos to indicate whether the protesters support or oppose the issue. These icons help display the range of support levels across trials and mitigate potential collinearity between support and moral conviction ratings. Throughout the decision-making task, all issues rated as familiar appear at least once. The total number of familiar issues per participant ranges from 24 to 40. When the two photographs appear on the screen, participants have four seconds to respond before the program automatically proceeds to the next trial. All stimuli are presented using E-Prime 2.0 (Psychology Software Tools, Pittsburgh, PA, USA). Participants’ eye movements are tracked using an EyeLink 1000 Plus Eye Tracker (SR Research, Ontario, Canada).
+
+The eye-tracking device is used to confirm participants’ attention and record two key eye-tracking measures: fixations and saccades. Fixations are defined as instances where the eye remains steadily focused on a specific item or location (Laan et al., 2015), while saccades are rapid eye movements shifting gaze between two fixation points (Ross et al., 2001). Fixation duration is calculated as the sum of the duration of all fixations occurring within the window from stimulus onset to participant response. The eye-tracking device also automatically records the number of fixations within each trial. Both fixation duration and fixation count are analyzed per trial, with each trial assigned a total number of fixations and an overall fixation duration. Fixation duration serves as a proxy measure for attention allocation, where longer durations indicate greater attention engagement [@holmqvist_eye_2011]. Conversely, fixation count is used as a proxy for decision difficulty, as higher fixation counts have been associated with more complex decision-making processes [@ernst_how_2022].
 ```{r}
 #| label: fig-taskoverview
 #| fig-cap: The Decision-making Trial Sequence
@@ -200,26 +205,30 @@ The experiment consists of a decision-making task in which participants, in each
 #| echo: FALSE
 knitr::include_graphics("Decision-Making Task.png")
 ```
-The eye-tracking device is used to confirm participants’ attention and record two key eye-tracking measures: fixations and saccades. Fixations are defined as instances where the eye remains steadily focused on a specific item or location (Laan et al., 2015), while saccades are rapid eye movements shifting gaze between two fixation points (Ross et al., 2001). Fixation duration is calculated as the sum of the duration of all fixations occurring within the window from stimulus onset to participant response. The eye-tracking device also automatically records the number of fixations within each trial. Both fixation duration and fixation count are analyzed per trial, with each trial assigned a total number of fixations and an overall fixation duration. Fixation duration serves as a proxy measure for attention allocation, where longer durations indicate greater attention engagement [@holmqvist_eye_2011]. Conversely, fixation count is used as a proxy for decision difficulty, as higher fixation counts have been associated with more complex decision-making processes [@ernst_how_2022].
 
 Pearson’s correlation coefficient is calculated to assess the relationship between familiarity ratings and moral conviction scores, providing a test of the first hypothesis. Additionally, a binomial test is conducted to examine how frequently the issue with the highest moral conviction score also has the highest familiarity rating. To test the second hypothesis, a mixed-effects regression model is used to analyze whether familiarity and moral conviction predict total fixation duration. The mixed-effects model is chosen due to the individual variability in fixation duration, which can differ between participants [@holmqvist_eye_2011-2].
 
 The eye-tracking raw files are converted into ASCII format, containing automatically coded and time-stamped events such as eye fixations and saccades, along with other gaze events. The eye-tracking device is synchronized with the E-Prime experiment module, allowing for cross-referencing of eye-tracking events with the experimental trials. Fixation duration is defined as the sum total of all fixations occurring within the response time window for a given trial. Trials with fixation durations of less than 100 milliseconds are excluded, as well as trials with zero fixations, as these likely indicate errors in the eye-tracking procedure. Furthermore, a linear mixed-effects regression is performed to assess the statistical significance and predictive strength of moral convictions and familiarity on fixation duration. After data cleaning and processing, the final dataset includes 33 participants who collectively completed 3,328 decision-making trials, which are incorporated into the statistical model.
 
-In analyzing the response time and eye-tracking variables, the independent variables of interest were operationalized through involving the two topics presented to the participant. Moral conviction was measured as the the difference between the moral conviction scores of consistent and inconsistent items, where the moral socre of the inconsistent item was subtracted from that of the consistent item. $$
+In analyzing the response time and eye-tracking variables, the independent variables of interest were operationalized through involving the two topics presented to the participant. Moral conviction was measured as the the difference between the moral conviction scores of consistent and inconsistent items, where the moral score of the inconsistent item was subtracted from that of the consistent item. This manipulation was necessary since the moral conviction score is inherently a scalar, non-directional measure [@skitka_moral_2005]. Consequently, items that people align with and align against , will have the same moral conviction score. To reconcile the measure's nondirectionality with two opposing topics on the screen , the following equation was employed to accurately measure the degree to which moral convictions influences decision-making^[A choice was considered consistent when a
+participant chose the protesters who supported the issue to which they had given a higher support score
+in the initial survey, and was inconsistent if the opposite was true.]. A variance inflation factor was used to ensure that no collinearity was present in the statistical model. 
+
+$$
 {\small
 \begin{array}{c}
 \mathbf{Moral\ Conviction\ Difference} = \\
 \mathbf{Moral\ Conviction\ Score_{consistent\ item}} -
 \mathbf{Moral\ Conviction\ Score_{inconsistent\ item}}
-\end{array}
+\end{array} 
 }
-$$ \vspace{1pt}
+$$  \vspace{1pt}
 Familiarity was measured similarly, where the familiarity score for the inconsistent item was also subtracted from the familiarity score of the inconsitent item. The same logic was also applied to operationalizing the political support variable. A linear mixed-effects regression analysis was conducted to examine the relationship between fixation duration and several predictors. Fixation duration was modeled as the dependent variable, wiuth differences in political support, topic familiarity , and moral conviction scores -as well as other covariates, entered as fixed effects. To account for repeated measures and idiosyncratic differences in gaze-movement patterns, random intercept were included for participants.
-```{r general-descriptive-stats,include=FALSE}
+```{r}
 #| echo: FALSE
 #| message: FALSE
 #| warning: FALSE
+#| include: FALSE
 #In this chunk , I will run high level statistics to supplement the first paragraph of general results. 
 
 mean_RT<-mean(newset$RT)
@@ -233,11 +242,12 @@ sd_FxR<-sd(newset$Fixation_Rate)
 
 
 ```
-```{r scaling-IVs,include=FALSE}
+```{r}
+#| label: scaling-IVs
 #| echo: FALSE
 #| message: FALSE
 #| warning: FALSE
-#| label: Scaling-IVs
+#| include: FALSE
 
 #to ensure all the independent variables are appropriately scaled and ready for the linear regression model, I am using a mutate function from dplyr to process all of them thoroughly for the analysis. 
 newset <- newset %>%
@@ -251,7 +261,8 @@ newset <- newset %>%
 
 ```
 
-```{r rearranging-for-table,warning=FALSE,echo=FALSE,include=FALSE}
+```{r}
+#| label: General-stats
 #| echo: FALSE
 #| message: FALSE
 #| warning: FALSE
@@ -274,7 +285,7 @@ gen_stats <- newset %>%
   )) %>%
   mutate(across(c(Mean,SD),~round(.x,1)))
 ```
-```{r tbl-Left-Right-General-Results,echo=FALSE,warning=FALSE}
+```{r}
 #| label: tbl-Left-Right-General-Results
 #| tbl-cap: General Eye-tracking Results for Left and Right Screen Choices
 #| echo: FALSE
@@ -284,7 +295,7 @@ gen_stats <- newset %>%
 kable(gen_stats)
 
 ```
-```{r fig-densityplot,warning=FALSE}
+```{r}
 #| label: fig-densityplot
 #| fig-cap: Fixation Duration Frequency Distribution for Left and Right Topics 
 #| fig-pos: H
@@ -350,7 +361,7 @@ ggplot(fixation_bins, aes(x = bin, y = n, color = Topic_Side)) +
 
 ```
 
-```{r one-way-anova-test,echo=FALSE,include=FALSE}
+```{r}
 #| label: one-way-anova-test
 #| echo: FALSE
 #| message: FALSE
@@ -382,7 +393,7 @@ anova_print2 <- paste("F(", df_between2, ",", df_within2, ") =", round(F_value2,
 # Results
 ## General Results
 In the time-constrained selection trials, participants spent an average of `r round(mean_RT/1000,2)` seconds to complete a topic-selection trial, with a standard deviation of `r round(sd_RT,0)` milliseconds. Within the response time window, the eye tracker detected that participants spent an average fixation time of `r round(mean_TFD/1000,2)` seconds, with a standard deviation of `r round(sd_TFD,0)` milliseconds. An average of `r round(mean_nFx,1)` fixation occurrences were registered per trial, with a standard deviation of `r round(sd_nFx,1)` occurrences. The fixation rate, calculated as the percentage of fixation time relative to response time, averaged around `r round(mean_FxR,1)` %, with a standard deviation of `r round(sd_FxR,1)` %.
-```{r Correlation-test,echo=FALSE}
+```{r}
 #| label: Correlation-test
 #| echo: FALSE
 #| message: FALSE
@@ -406,7 +417,7 @@ pearsontest<-cor.test(newset$Moral_left_scaled,newset$Familiar1_scaled, method =
 corr_estimate<- pearsontest$estimate #the correlation estimate
 corr_pvalue<- pearsontest$p.value #the correlation pvalue
 ```
-```{r fig-alt-effectplot,echo=FALSE}
+```{r}
 #| label: fig-alt-effectplot
 #| fig-show: hold
 #| fig-cap: The effect of topic familiarity on moral conviction score
@@ -440,10 +451,10 @@ p_corr <- ggplot(predicted_data, aes(x = x, y = predicted, color = group)) +
 p_corr
 
 ```
-```{r fig-tileplot, echo= FALSE,fig.pos="h",fig.cap="Count tileplot highlighting the correlation between moral conviction and familiarity of the topic"}
+```{r}
 #| label: fig-tileplot
 #| fig-show: hold
-#| fig-cap: The Count of Topics Across Familiarity and Moral Conviction Score
+#| fig-cap: Count tileplot highlighting the correlation between moral conviction and familiarity of the topic
 #| fig-height: 3
 #| fig-width: 4
 #| fig-pos: h
@@ -483,7 +494,7 @@ summary(RTLMER)
 
 
 As @tbl-Left-Right-General-Results the average fixation duration and number of fixations across left and right topics were fairly similar across all trials. Where @fig-densityplot further illustrates this, by showing the similarity of the eye-tracking values across the two opposing topics across trials throughout both selections. Through a one-way ANOVA test , it was confirmed that the selection of a topic on the left or right did not influence the response time in a meaningful way (`r anova_print`). However , a one-way anova test show that participants fixated more on the topic that they selected (`r anova_print2`). @fig-densityplot confirms this finding , as the mean fixation value of the chosen topic is higher than the unchosen one in both scenarios.
-```{r Fixation-Duration-LMER-Test,echo=FALSE,include=FALSE}
+```{r}
 #| label: Fixation-Duration-LMER-Test
 #| echo: FALSE
 #| message: FALSE
@@ -496,7 +507,7 @@ TFDLMERTest<-lmer(Total_Fixation_Duration~supportDiffReAdj_scaled +
                                   (1|Subject),data=newset)
 
 ```
-```{r fig-moraleffectplot}
+```{r}
 #| label: fig-moraleffectplot
 #| fig-show: hold
 #| fig-cap: The effect of moral conviction difference, political support difference, and protest indication on eye fixation duration
@@ -530,9 +541,10 @@ p_moraleffectplot$data$facet <- ifelse(
 
 p_moraleffectplot
 ```
-```{r Cogniload-test,echo=FALSE,include=FALSE}
+```{r}
 #| label: Cogniload-test 
 #| echo: FALSE
+#| include: FALSE
 #| message: FALSE
 #| warning: FALSE
 #in this chunk , I will run a linear mixed effects regression analysis to test whether or not differences in topic familiarity and moral convictions predicted a reduced cognitive load or not by looking at fixation count as a dependent variable 
@@ -545,7 +557,7 @@ CogniloadLMERTest<-lmer(Total_nFixations ~supportDiffReAdj_scaled +
 summary(CogniloadLMERTest)
 
 ```
-```{r fig-clmoraleffectplot}
+```{r}
 #| label: fig-clmoraleffectplot
 #| fig-show: hold
 #| fig-cap: The effect of moral conviction difference, political support difference, and protest indication on fixation count
@@ -580,7 +592,7 @@ p_clmoraleffectplot$data$facet <- ifelse(
 p_clmoraleffectplot
 
 ```
-```{r fig-clfamiliareffectplot}
+```{r}
 #| label: fig-clfamiliareffectplot
 #| fig-show: hold
 #| fig-cap: The effect of topic familiarity difference, political support difference, and protest indication on fixation count
@@ -588,6 +600,7 @@ p_clmoraleffectplot
 #| fig-width: 6
 #| fig-pos: h
 #| echo: FALSE
+#| include: FALSE
 #| message: FALSE
 #| warning: FALSE
 p_clfamiliareffectplot <- plot_model(
@@ -649,12 +662,10 @@ The practical implications of this research are particularly relevant in the con
 A future study could test whether interventions designed to increase deliberative engagement—such as prompting individuals to consider counterarguments—could mitigate the cognitive effects of familiarity and moral conviction. While moral decision-making is not strictly emotional and intuitive [@bartels_principled_2008], moral convictions can create cognitive rigidity that limits productive discourse and self-reflection. Future research could explore how perceived consensus and topic familiarity influence news consumption patterns in social media contexts, investigating how individuals selectively accept or reject information that aligns with their moral convictions. Furthermore, the present study paves the way to understand how a social media blackout -restricting or eliminating social media from daily life- can influence moral convictions of trending socio-political topics. 
 
 While this study’s findings are significant, they should be interpreted with caution due to the relatively small sample size 
-(n=`r summary(RTLMER)$ngrps`), which limits generalizability. Future research should replicate these findings with a larger and more diverse participant pool, as well as a wider range of socio-political topics, to enhance the external validity of the results. A longitudinal study could also provide a more comprehensive understanding of how media exposure patterns contribute to the formation and entrenchment of moral convictions. Additionally, because this study relied on self-reported familiarity levels rather than experimentally manipulating exposure, it remains unclear whether familiarity directly causes moral conviction formation. A future experiment could simulate familiarity by repeatedly exposing participants to moralizable socio-political topics and measuring cognitive and affective responses over time. Finally, while this study focused on cognitive effects, future research could examine the emotional dimension of moral convictions by using physiological measures such as skin conductance responses to capture affective arousal in moral decision-making tasks.
+(n=`r summary(RTLMER)$ngrps`), which limits generalizability. Despite the large number of trials (T= `r nobs(RTLMER)`), future research should replicate these findings with a larger and more diverse participant pool, as well as a wider range of socio-political topics, to enhance the external validity of the results. A longitudinal study could also provide a more comprehensive understanding of how media exposure patterns contribute to the formation and entrenchment of moral convictions. Additionally, because this study relied on self-reported familiarity levels rather than experimentally manipulating exposure, it remains unclear whether familiarity directly causes moral conviction formation. A future experiment could simulate familiarity by repeatedly exposing participants to moralizable socio-political topics and measuring cognitive and affective responses over time. Finally, while this study focused on cognitive effects, future research could examine the emotional dimension of moral convictions by using physiological measures such as skin conductance responses to capture affective arousal in moral decision-making tasks.
 
 By integrating insights from moral psychology, cognitive science, and digital media research, this study sheds light on how familiarity and moral conviction interact to shape decision-making. Understanding the cognitive effects of repeated exposure may help explain the intensification of moral divisions in the digital age. Future research should explore strategies to promote critical thinking and open-mindedness in an era of algorithm-driven moralization.
 
-```{r}
-
-```
-
 # References
+
+
