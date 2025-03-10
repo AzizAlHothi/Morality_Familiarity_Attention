@@ -44,6 +44,7 @@ tbl-apa: true
 #Some external packages are commented out , if you consent to them being loaded and installed, remove the comment hash "#"
 require(tidyverse)
 require(readr)
+library(readr)
 require(tidyr)
 require(dplyr)
 require(stringr)
@@ -68,7 +69,7 @@ library(performance)
 #| message: FALSE
 #| warning: FALSE
 #Create a dataframe out of the csv file 
-newset<-read_csv("Main_Beh_TFD_ROI.csv",show_col_types = FALSE)
+newset<-read_csv("Main_Beh_TFD_Updated.csv",show_col_types = FALSE)
 
 newset<-newset %>%  #introducing two new variables called MoralDiff_consistent and FamiliarDiff_Consistent, which will be outlined in the manuscript. 
   mutate(MoralDiff_Consistent= case_when((consistent==1&LeftChoice==1)|(consistent==0&LeftChoice==0)~                                              Moral_left - Moral_right,
@@ -81,7 +82,7 @@ newset<-newset %>%  #introducing two new variables called MoralDiff_consistent a
                                LeftChoice==0~Moral_right),
          ProtestView=fct(as.character(ProtestView)), #changing ProtestView to a factor to ease facet use
          Topic.selected=fct(if_else(LeftChoice==1,"Left Topic Selected","Right Topic Selected")),#Introducing a          Topic.selected variable to enable faceting in ggplots
-         across(c(Right_Fixation,Right_nFixation,Unchosen_nFixations,Unchosen_Fixation,Chosen_Fixation,Chosen_nFixations,Left_nFixations,Left_Fixation,Total_nFixations,Consistent_Fixation,Inconsistent_Fixation),as.numeric), #converting all variables of interest into numeric variables for analysis. 
+         across(c(Right_Fixation,Right_nFixation,Unchosen_nFixations,Unchosen_Fixation,Chosen_Fixation,Chosen_nFixations,Left_nFixations,Left_Fixation,Total_nFixations),as.numeric), #converting all variables of interest into numeric variables for analysis. 
           Subject=str_squish(Subject), #ensuring no whitespace in the Subject Column 
           Subject=str_replace_na(Subject,"NA"), #ensuring all missing NAs in the Subject Column are handled
           ProtestView=fct_relevel(ProtestView), 
@@ -673,6 +674,7 @@ While the present study’s findings are significant, they should be interpreted
 
 By integrating insights from moral psychology, cognitive science, and digital media research, this study sheds light on how familiarity and moral conviction interact to shape decision-making. Understanding the cognitive effects of repeated exposure may help explain the intensification of moral divisions in the digital age. Future research should explore strategies to promote critical thinking and self-revision in an era of algorithm-driven moralization.
 
+\newpage
 # References
 
 
