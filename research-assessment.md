@@ -24,7 +24,7 @@ To complete this assessment:
 
 Name: Abdulaziz AlHothi
 
-CNetID: alhothi
+CNetID: alhothi\@uchicago.edu
 
 Section: 1
 
